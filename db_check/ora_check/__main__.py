@@ -34,11 +34,13 @@ def load_config(config_file):
     with open(config_file_path, 'r') as f:
         return yaml.safe_load(f)
 
-def run_checks(cur, checks):
+def run_checks(cur, checks, owner_exclude_list):
     results = []
     for check in checks:
         print(f"Running check: {check['name']}")
-        cur.execute(check['query'])
+        formatted_query = check['query'].replace("{owner_exclude_list}", ", ".join([f"'{owner}'" for owner in owner_exclude_list]))
+        
+        cur.execute(formatted_query)
         rows = cur.fetchall()
 
         # Format and store the results
@@ -218,7 +220,7 @@ def validate_database(db_user, db_password, db_host, db_port, db_service, config
     cur = conn.cursor()
 
     # Run the checks
-    results = run_checks(cur, config['validations'])
+    results = run_checks(cur, config['validations'], config['owner_exclude_list'])
 
     # Generate report filename with database host and timestamp
     timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
