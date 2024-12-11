@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "dms_check"
-version = "0.1.0"
+version = "0.1.1"
 description = "Script to check compatibility of data with DMS"
 authors = ["sametkaradag <sametkaradag@gmail.com>"]
 license = "Google"
