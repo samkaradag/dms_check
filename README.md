@@ -13,9 +13,6 @@ This script checks an Oracle database compatibility for DMS, generating a report
 ## Requirements
 
 * **Python 3.9+:** The script is written in Python and requires Python 3.9 or higher.
-* **oracledb:** The Oracle database connector for Python. Install it using:  `pip install oracledb`
-* **PyYAML:** For parsing the YAML configuration file. Install it using: `pip install pyyaml`
-* **Google Cloud Client Library for Secret Manager:**  Required if using Google Secret Manager for password storage. Install it using: `pip install google-cloud-secret-manager`
 
 
 ## Setup
@@ -28,7 +25,7 @@ pip install dms_check
 ## Usage
 
 ```bash
-python your_script_name.py --user <your_username> --password <your_password> --host <your_host> --port <your_port> --service <your_service_name> [--config <config_file_path>] [--format text|html]
+ora_check --user <your_oracle_username> --password <your_password> --host <your_host> --port <your_port> --service <your_service_name> [--config <config_file_path>] [--format text|html]
 ```
 
 * Replace `<your_username>`, `<your_password>`, `<your_host>`, `<your_port>`, and `<your_service_name>` with your Oracle database credentials and connection details.
@@ -40,7 +37,7 @@ python your_script_name.py --user <your_username> --password <your_password> --h
 
 ```bash
 export GOOGLE_CLOUD_PROJECT="your-gcp-project-id"
-python your_script_name.py --user your_username --password gcp-secret:your-secret-name --host your_host --port 1521 --service your_service_name --format html
+ora_check --user your_username --password gcp-secret:your-secret-name --host your_host --port 1521 --service your_service_name --format html
 ```
 
 ## Example with custom YAML:
