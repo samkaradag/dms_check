@@ -1,54 +1,3 @@
-# Oracle Database DMS Checker
-
-This script checks an Oracle database compatibility for DMS, generating a report in either text or HTML format.  It's designed to assist in verifying the readiness of a database for GCP Data Migration Service (DMS) processes.
-
-## Features
-
-* **Configuration-driven:** Uses a YAML configuration file to define the database checks to perform.  This allows for easy customization and maintenance. Simply use --config option to provide a custom yaml.
-* **Secure password handling:** Supports password retrieval from Google Cloud Secret Manager, enhancing security.  Alternatively, you can directly provide the password as a command-line argument.
-* **Flexible output:** Generates reports in both text and HTML formats. The HTML report includes styling for improved readability.
-* **Error handling:** Includes basic error handling for missing environment variables and connection issues.
-
-
-## Requirements
-
-* **Python 3.9+:** The script is written in Python and requires Python 3.9 or higher.
-* **oracledb:** The Oracle database connector for Python. Install it using:  `pip install oracledb`
-* **PyYAML:** For parsing the YAML configuration file. Install it using: `pip install pyyaml`
-* **Google Cloud Client Library for Secret Manager:**  Required if using Google Secret Manager for password storage. Install it using: `pip install google-cloud-secret-manager`
-
-
-## Setup
-pip install dms_check
-1. **Install dependencies:**  Install the Python package: pip install dms_check
-2. **(Optional) Configure Google Cloud Secret Manager:** If you choose to store the database password in Google Cloud Secret Manager, set the `GOOGLE_CLOUD_PROJECT` environment variable to your Google Cloud project ID.  Then, refer to the secret in your command-line argument (see Usage section).
-
-
-
-## Usage
-
-```bash
-python your_script_name.py --user <your_username> --password <your_password> --host <your_host> --port <your_port> --service <your_service_name> [--config <config_file_path>] [--format text|html]
-```
-
-* Replace `<your_username>`, `<your_password>`, `<your_host>`, `<your_port>`, and `<your_service_name>` with your Oracle database credentials and connection details.
-* You can use `gcp-secret:<secret_name>` for the `--password` argument to retrieve the password from Google Secret Manager.
-*  The `--format` argument specifies the output format (`text` or `html`).  Defaults to `text`.
-
-
-## Example with Google Cloud Secret Manager:
-
-```bash
-export GOOGLE_CLOUD_PROJECT="your-gcp-project-id"
-python your_script_name.py --user your_username --password gcp-secret:your-secret-name --host your_host --port 1521 --service your_service_name --format html
-```
-
-## Example with custom YAML:
-**Optional - Configure the YAML file:** If you want to customize checks create/update the `config_oracle.yaml` file (or specify a different path using the `--config` command-line argument) in the same directory as the script.  This file should contain a list of database checks in YAML format.  See the example below.
-
-**Example `config_oracle.yaml`:**
-
-```yaml
 validations:
   - name: "Unsupported Columns"
     description: "Columns with unsupported data types"
@@ -179,10 +128,3 @@ validations:
       WHERE IOT_TYPE IS NOT NULL AND OWNER NOT IN ('SYS', 'SYSTEM', 'CTXSYS', 'MDSYS', 'WMSYS', 'XDB', 'ORDDATA', 'AUDSYS', 'OJVMSYS', 'DBSFWUSER','DBSNMP', 'GSMADMIN_INTERNAL', 'DVSYS', 'OUTLN', 'APPQOSSYS', 'ORDSYS', 'LBACSYS')
     warning_message: |
       Error: Index-organized tables are not supported:
-```
-
-
-## License
-Google 
-
-

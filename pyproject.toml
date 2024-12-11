@@ -1,0 +1,24 @@
+[tool.poetry]
+name = "dms_check"
+version = "0.1.0"
+description = "Script to check compatibility of data with DMS"
+authors = ["sametkaradag <sametkaradag@gmail.com>"]
+license = "Google"
+readme = "README.md"
+packages = [
+    {include = "ora_check", from = "db_check/"}
+]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+pyyaml = "6.0.1"
+oracledb = "^2.3.0"
+google-cloud-secret-manager = "^2.21.1"
+
+[tool.poetry.scripts]
+ora_check = "ora_check.__main__:main"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
