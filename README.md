@@ -22,10 +22,20 @@ pip install dms_check
 
 
 
-## Usage
+## Usage (either use tns or host)
 
 ```bash
 ora_check --user <your_oracle_username> --password <your_password> --host <your_host> --port <your_port> --service <your_service_name> [--config <config_file_path>] [--format text|html]
+```
+
+**Example ( using tns):**
+If you are using Oracle Client and tns please ensure that LD_LIBRARY_PATH is updated with the oracle_client path. i.e:
+
+export LD_LIBRARY_PATH=~/oracle-client/instantclient_23_5:$LD_LIBRARY_PATH
+
+
+```bash
+ora_check --user <your_oracle_username> --password <your_password> --tns <oracle_tns_alias> --tns_path <tnsnames.ora_path> [--config <config_file_path>] [--format text|html]
 ```
 
 * Replace `<your_username>`, `<your_password>`, `<your_host>`, `<your_port>`, and `<your_service_name>` with your Oracle database credentials and connection details.
